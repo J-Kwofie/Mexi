@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import {ThemeProvider} from 'styled-components'
+import { GlobalStyled } from './components/GlobalStyled';
+import { Route,Routes } from 'react-router';
+import {theme} from './utils/themeData'
+import Navbar  from './components/Navbar';
+import Home from './pages/Home'
+import Product from './pages/Product';
+import NoMatch from './pages/NoMatch';
+import Footer from './components/homepageComponent/Footer';
+import ProductDetails from './components/product/Product';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyled />
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='product'>
+          <Route path=':category'  element={<Product/>} />
+          <Route path=':category/:product_id'  element={<ProductDetails/>} />
+        </Route>
+        <Route path='*' element={<NoMatch />} />
+      </Routes>
+      <Footer />
+    </ThemeProvider>
   );
 }
 
